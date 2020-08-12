@@ -1,10 +1,14 @@
 <?php
-require_once("bin/conekta-php-master/lib/Conekta.php");
+//require_once("bin/conekta-php-master/lib/Conekta.php");
+require_once("vendor/autoload.php");
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+$dotenv->load();
+
 class Payment{
 
     #private $ApiKey="tuapikeyprivada";
     #private $ApiKey="key_eYvWV7gSDkNYXsmr";
-    private $ApiKey="";
+    private $ApiKey;
     private $ApiVersion="2.0.0";
 
     private $UserDB="root";
@@ -20,10 +24,11 @@ class Payment{
         $this->description=$description;
         $this->total=$total;
         $this->email=$email;
+
+        $this->ApiKey = (empty($_ENV['CONECKTA_PRIVATE_KEY']))? "":$_ENV['CONECKTA_PRIVATE_KEY'];
     }
 
     public function Pay(){
-
         \Conekta\Conekta::setApiKey($this->ApiKey);
         \Conekta\Conekta::setApiVersion($this->ApiVersion);
 

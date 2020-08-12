@@ -94,7 +94,13 @@
     <script>
         //Conekta.setPublicKey("tuapikeypublica");
         //Conekta.setPublicKey("key_eYvWV7gSDkNYXsmr");
-        Conekta.setPublicKey("");
+        $.get('get_conecta_publickey.php',function(data){
+            data = JSON.parse(data);
+            console.table(data);
+            Conekta.setPublicKey(data.key);
+        })
+
+
         
         var conektaSuccessResponseHandler= function(token){
            
